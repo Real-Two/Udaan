@@ -79,12 +79,16 @@ export default function MenteeDashboard() {
                   <div className="bg-teal-600 h-2 rounded-full" style={{ width: `${activeGoal.progress}%` }}></div>
                 </div>
               </div>
-              <div className="flex gap-2 mt-3">
-                {activeGoal.tags?.map((tag, i) => (
-                  <span key={i} className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                    {tag}
-                  </span>
-                ))}
+              <div className="flex flex-wrap gap-1.5 mt-3">
+                {activeGoal.tags?.map((tag, i) => {
+                  const label = typeof tag === 'object' ? tag.label : tag;
+                  const color = typeof tag === 'object' ? tag.color : 'bg-gray-100 text-gray-600';
+                  return (
+                    <span key={i} className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${color}`}>
+                      {label}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>
