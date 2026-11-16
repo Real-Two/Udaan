@@ -8,10 +8,10 @@ import DashboardLayout from './components/layout/DashboardLayout';
 
 // Mentee pages
 import MenteeDashboard from './pages/mentee/MenteeDashboard';
-import MenteeMatches from './pages/mentee/MenteeMatches';
+import MenteeMentors from './pages/mentee/MenteeMentors';
 import MenteeGoals from './pages/mentee/MenteeGoals';
 import MenteeMessages from './pages/mentee/MenteeMessages';
-import MenteeSchedule from './pages/mentee/MenteeSchedule';
+import MenteeRequestMeeting from './pages/mentee/MenteeRequestMeeting';
 import MenteeProfile from './pages/mentee/MenteeProfile';
 
 // Mentor pages
@@ -33,17 +33,19 @@ export default function App() {
         <Route path="/register/mentee" element={<MenteeFlow />} />
         <Route path="/register/mentor" element={<MentorFlow />} />
 
-        {/* Mentee dashboard — nested routes under persistent layout */}
+        {/* Mentee portal — nested routes under persistent layout */}
         <Route path="/mentee" element={<DashboardLayout />}>
           <Route index element={<MenteeDashboard />} />
-          <Route path="matches" element={<MenteeMatches />} />
+          <Route path="mentors" element={<MenteeMentors />} />
+          <Route path="matches" element={<Navigate to="/mentee/mentors" replace />} />
           <Route path="goals" element={<MenteeGoals />} />
           <Route path="messages" element={<MenteeMessages />} />
-          <Route path="schedule" element={<MenteeSchedule />} />
+          <Route path="request-meeting" element={<MenteeRequestMeeting />} />
+          <Route path="schedule" element={<Navigate to="/mentee/request-meeting" replace />} />
           <Route path="profile" element={<MenteeProfile />} />
         </Route>
 
-        {/* Mentor dashboard — nested routes under persistent layout */}
+        {/* Mentor portal — nested routes under persistent layout */}
         <Route path="/mentor" element={<DashboardLayout />}>
           <Route index element={<MentorDashboard />} />
           <Route path="mentees" element={<MentorMentees />} />
@@ -53,7 +55,7 @@ export default function App() {
           <Route path="profile" element={<MentorProfile />} />
         </Route>
 
-        {/* Legacy /dashboard route redirects to mentee dashboard */}
+        {/* Legacy /dashboard route redirects to mentee portal */}
         <Route path="/dashboard/*" element={<Navigate to="/mentee" replace />} />
 
         {/* Catch-all */}

@@ -69,10 +69,55 @@ const loadInitialProfiles = () => {
   return DEFAULT_PROFILES;
 };
 
+// Initial Matched Mentors for the mentee
+const DEFAULT_MATCHED_MENTORS = [
+  mentors[0], // Sneha Iyer (Razorpay)
+  mentors[3], // Karthik Raman (Zerodha)
+  mentors[6], // Vikram Bhat (Google India)
+];
+
+const DEFAULT_MEETING_REQUESTS = [
+  {
+    id: 'req-1',
+    mentorId: 'm1',
+    mentorName: 'Sneha Iyer',
+    mentorTitle: 'VP of Engineering, Razorpay',
+    mentorAvatarColor: 'bg-teal-500',
+    mentorInitials: 'SI',
+    topic: 'System Design Deep Dive & Mock Architectural Review',
+    urgency: 'This Week',
+    preferredTime: 'Morning (10:00 AM - 12:00 PM IST)',
+    duration: '45 mins',
+    notes: 'Want to go through database sharding and review my URL shortener design before our mock interview.',
+    status: 'confirmed',
+    scheduledDate: 'Fri, Sep 18 · 10:00 AM IST',
+    createdAt: '2026-09-15T10:00:00Z',
+  },
+  {
+    id: 'req-2',
+    mentorId: 'm4',
+    mentorName: 'Karthik Raman',
+    mentorTitle: 'Staff Software Engineer, Zerodha',
+    mentorAvatarColor: 'bg-orange-500',
+    mentorInitials: 'KR',
+    topic: 'React Performance & Production State Management',
+    urgency: 'Next Week',
+    preferredTime: 'Afternoon (3:00 PM - 5:00 PM IST)',
+    duration: '30 mins',
+    notes: 'Reviewing Zerodha Kite custom hook patterns and optimizing re-renders in my dashboard.',
+    status: 'pending',
+    scheduledDate: 'Awaiting Mentor Confirmation',
+    createdAt: '2026-09-16T14:30:00Z',
+  },
+];
+
 const initialState = {
   profiles: loadInitialProfiles(),
   user: currentUser,
   mentor: currentMentor,
+  matchedMentors: DEFAULT_MATCHED_MENTORS,
+  meetingRequests: DEFAULT_MEETING_REQUESTS,
+  selectedMentor: null,
   isLoggedIn: false,
   matches,
   goals: kanbanGoals,
@@ -168,6 +213,23 @@ function appReducer(state, action) {
 
     case 'TOGGLE_GOAL_DETAIL':
       return { ...state, selectedGoal: action.payload };
+
+    case 'VIEW_MENTOR_PROFILE':
+      return { ...state, selectedMentor: action.payload };
+
+    case 'REQUEST_MEETING': {
+      const newRequest = {
+        id: `req-${Date.now()}`,
+        status: 'pending',
+        scheduledDate: 'Awaiting Mentor Confirmation',
+        createdAt: new Date().toISOString(),
+        ...action.payload,
+      };
+      return {
+        ...state,
+        meetingRequests: [newRequest, ...state.meetingRequests],
+      };
+    }
 
     case 'MOVE_GOAL': {
       const { sourceCol, destCol, sourceIndex, destIndex } = action.payload;

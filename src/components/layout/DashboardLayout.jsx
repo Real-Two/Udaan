@@ -1,9 +1,11 @@
+import { useRef, useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Users,
   Target,
   MessageSquare,
+  CalendarPlus,
   Calendar,
   User,
   Rocket,
@@ -14,10 +16,10 @@ import { useApp } from '../../context/AppContext';
 
 const menteeNav = [
   { path: '/mentee', icon: LayoutDashboard, label: 'Dashboard' },
-  { path: '/mentee/matches', icon: Users, label: 'Matches' },
+  { path: '/mentee/mentors', icon: Users, label: 'My Mentors' },
   { path: '/mentee/goals', icon: Target, label: 'Goals' },
   { path: '/mentee/messages', icon: MessageSquare, label: 'Messages' },
-  { path: '/mentee/schedule', icon: Calendar, label: 'Schedule' },
+  { path: '/mentee/request-meeting', icon: CalendarPlus, label: 'Request Meeting' },
   { path: '/mentee/profile', icon: User, label: 'Profile' },
 ];
 
@@ -34,6 +36,15 @@ export default function DashboardLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { state, dispatch } = useApp();
+  const mainRef = useRef(null);
+
+  // Scroll to top automatically when navigating to any new page
+  useEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0;
+    }
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const isMentor = location.pathname.startsWith('/mentor');
   const navItems = isMentor ? mentorNav : menteeNav;
@@ -142,8 +153,8 @@ export default function DashboardLayout() {
         </div>
       </aside>
 
-      {/* Main content — rendered by nested route */}
-      <main className="flex-1 p-6 overflow-auto">
+      {/* Main content — resets scroll to top automatically on page change */}
+      <main ref={mainRef} className="flex-1 p-6 overflow-auto">
         <Outlet />
       </main>
     </div>
