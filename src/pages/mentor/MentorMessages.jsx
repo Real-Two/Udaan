@@ -9,8 +9,8 @@ const MentorMessages = () => {
         <p className="text-gray-500 text-sm mt-1">Stay connected with your mentees</p>
       </header>
 
-      <div className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden h-[600px] min-h-[500px]">
-        <ChatWindow />
+      <div className="flex-1 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden h-[650px] min-h-[500px]">
+        <ChatWindow role="mentor" />
       </div>
     </div>
   );

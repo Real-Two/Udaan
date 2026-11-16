@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import AuthPage from './pages/AuthPage';
 import MenteeFlow from './pages/MenteeFlow';
 import MentorFlow from './pages/MentorFlow';
 import DashboardLayout from './components/layout/DashboardLayout';
@@ -25,6 +26,8 @@ export default function App() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/auth/mentee" element={<AuthPage role="mentee" />} />
+      <Route path="/auth/mentor" element={<AuthPage role="mentor" />} />
       <Route path="/register/mentee" element={<MenteeFlow />} />
       <Route path="/register/mentor" element={<MentorFlow />} />
 

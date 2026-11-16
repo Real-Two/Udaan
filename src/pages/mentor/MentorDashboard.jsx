@@ -14,7 +14,9 @@ const MentorDashboard = () => {
   return (
     <div className="space-y-6">
       <header className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, {mentor.name.split(' ')[0]} 👋</h1>
+        <h1 className="text-2xl font-bold text-gray-900">
+          Welcome back, {state.user?.name ? state.user.name.split(' ')[0] : 'Sneha'} 👋
+        </h1>
         <p className="text-gray-500 text-sm mt-1">Here's your mentorship overview.</p>
       </header>
 

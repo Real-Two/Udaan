@@ -17,7 +17,9 @@ export default function MenteeDashboard() {
   return (
     <div className="flex-1 w-full max-w-7xl mx-auto pb-12">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, Aditya 👋</h1>
+        <h1 className="text-2xl font-bold text-gray-900">
+          Welcome back, {state.user?.name ? state.user.name.split(' ')[0] : 'Aditya'} 👋
+        </h1>
         <p className="text-gray-500 text-sm mt-1">Here's what's happening with your mentorship journey.</p>
       </div>
 
@@ -47,8 +49,10 @@ export default function MenteeDashboard() {
                   {nextMeeting.duration} min
                 </span>
                 <div className="flex items-center gap-2">
-                  <img src={nextMeeting.participantAvatar} alt={nextMeeting.participantName} className="w-6 h-6 rounded-full bg-gray-200" />
-                  <span className="text-sm font-medium text-gray-700">{nextMeeting.participantName}</span>
+                  <div className={`w-6 h-6 rounded-full ${nextMeeting.mentor?.avatarColor || 'bg-teal-500'} text-white flex items-center justify-center text-[10px] font-bold`}>
+                    {nextMeeting.mentor?.initials || 'SI'}
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">{nextMeeting.mentor?.name || 'Sneha Iyer'}</span>
                 </div>
               </div>
             </div>

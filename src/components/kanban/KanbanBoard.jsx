@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { Target, Circle, Clock, CheckCircle2 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import GoalCard from './GoalCard';
+import GoalDetailModal from './GoalDetailModal';
 
 const COLUMNS = [
   { id: 'todo', title: 'To-Do', icon: Circle },
@@ -36,9 +37,14 @@ const KanbanBoard = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-2 mb-2">
-        <Target className="text-teal-600" size={24} />
-        <h2 className="text-2xl font-bold text-gray-900">Goal Tracker</h2>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <Target className="text-teal-600" size={24} />
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Goal Tracker</h2>
+            <p className="text-xs text-gray-500">Drag cards to update progress or reorder priority. Click any card for full details & resources.</p>
+          </div>
+        </div>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
@@ -84,6 +90,9 @@ const KanbanBoard = () => {
           })}
         </div>
       </DragDropContext>
+
+      {/* Goal Detail Modal */}
+      {state.selectedGoal && <GoalDetailModal />}
     </div>
   );
 };
